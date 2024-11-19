@@ -1,18 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Round : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private TMP_Text round;
+    [SerializeField] private float totalTour;
+    private int tour;
+
     void Start()
     {
-        
+        round.text = $"{tour}/{totalTour}";
+        tour = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddTour()
     {
-        
+        tour++;
+        UpdateTour();
+    }
+
+    void UpdateTour()
+    {
+        if (round != null)
+        {
+            round.text = $"{tour}/{totalTour}";
+        }
+        else
+        {
+            Debug.LogError("round is not assigned in the inspector!");
+        }
     }
 }
