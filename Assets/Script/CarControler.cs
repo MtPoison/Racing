@@ -26,14 +26,22 @@ public class CarControler : MonoBehaviour
     private float nextBoostAvailableTime = 0f;
 
     private SoundManager soundManager;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         playerControler = new PlayerControler();
         soundManager = GetComponent<SoundManager>();
+        audioSource = GetComponent<AudioSource>();
+
         if (soundManager == null)
         {
             Debug.LogError("Aucun SoundManager trouvé sur " + gameObject.name);
+        }
+
+        if (audioSource == null)
+        {
+            Debug.LogError("Aucun AudioSource trouvé sur " + gameObject.name);
         }
     }
 
@@ -65,6 +73,7 @@ public class CarControler : MonoBehaviour
         if (isBoosting && Time.time >= boostEndTime)
         {
             isBoosting = false;
+            currentSpeed = Mathf.Min(currentSpeed, maxSpeed); // Réinitialisation à maxSpeed
             soundManager.StopSound();
         }
 
@@ -88,7 +97,10 @@ public class CarControler : MonoBehaviour
 
         currentSpeed = Mathf.Clamp(currentSpeed, maxReverseSpeed, maxSpeed * speedMultiplier);
 
-        AdjustVolume();
+        if (!isBoosting)
+        {
+            AdjustVolume();
+        }
 
         float rotation = input.x * rotationSpeed * Time.deltaTime;
         transform.Rotate(0, 0, -rotation);
@@ -104,6 +116,10 @@ public class CarControler : MonoBehaviour
             boostEndTime = Time.time + boostDuration;
             nextBoostAvailableTime = Time.time + boostCooldown;
 
+            if (audioSource != null)
+            {
+                audioSource.volume = 1;
+            }
             soundManager.PlaySound(boostSound);
         }
     }
@@ -113,6 +129,7 @@ public class CarControler : MonoBehaviour
         if (isBoosting)
         {
             isBoosting = false;
+            currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
             soundManager.StopSound();
         }
     }

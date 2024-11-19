@@ -111,7 +111,7 @@ MonoBehaviour:
   boostCooldown: 5
   accelerationSound: {fileID: 8300000, guid: e6d5c3cfa6b7b384da0a06960a932362, type: 3}
   brakeSound: {fileID: 8300000, guid: 69e23d670bbfbf547ad111fefde6737e, type: 3}
-  boostSound: {fileID: 8300000, guid: e6d5c3cfa6b7b384da0a06960a932362, type: 3}
+  boostSound: {fileID: 8300000, guid: c9f2486a238491e488e66c75929ae57b, type: 3}
 --- !u!61 &2378642096611164542
 BoxCollider2D:
   m_ObjectHideFlags: 0
