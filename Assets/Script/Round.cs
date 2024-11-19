@@ -11,8 +11,9 @@ public class Round : MonoBehaviour
 
     void Start()
     {
+        tour = 1;  
         round.text = $"{tour}/{totalTour}";
-        tour = 0;
+        
     }
 
     public void AddTour()
@@ -20,6 +21,8 @@ public class Round : MonoBehaviour
         tour++;
         UpdateTour();
     }
+
+    public int GetTour() {  return tour; }
 
     void UpdateTour()
     {

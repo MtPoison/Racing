@@ -4,19 +4,26 @@ using UnityEngine;
 public class End : MonoBehaviour
 {
     [SerializeField] Round round;
+    private CheckpointManager manager;
+    private void Start()
+    {
+        manager = FindObjectOfType<CheckpointManager>();
+        if (manager == null)
+        {
+            Debug.LogError("CheckpointManager introuvable dans la scène.");
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            round.AddTour();
-            collision.gameObject.GetComponent<Collider2D>().enabled = false;
-            StartCoroutine(ReenableCollider(collision.gameObject)); 
+            
+            if (manager.AreAllCheckpointsTrue())
+            {
+                round.AddTour();
+                manager.ResetAllCheckpoints();
+            }
         }
     }
 
-    private IEnumerator ReenableCollider(GameObject player)
-    { 
-        yield return new WaitForSeconds(3f);
-        player.GetComponent<Collider2D>().enabled = true;
-    }
 }
