@@ -54,33 +54,26 @@ public class CarControler : MonoBehaviour
             isBoosting = false;
         }
 
-        // Appliquer le multiplicateur de boost si actif
         float speedMultiplier = isBoosting ? boostMultiplier : 1f;
 
-        // Accélération progressive en appuyant sur Z
         if (input.y > 0)
         {
             currentSpeed += acceleration * Time.deltaTime * speedMultiplier;
         }
-        // Marche arrière en appuyant sur S
         else if (input.y < 0)
         {
             currentSpeed -= acceleration * Time.deltaTime;
         }
         else
         {
-            // Décélération naturelle lorsque rien n'est pressé
             currentSpeed = Mathf.Lerp(currentSpeed, 0, Time.deltaTime * brakePower);
         }
 
-        // Limiter la vitesse en marche avant et en marche arrière
         currentSpeed = Mathf.Clamp(currentSpeed, maxReverseSpeed, maxSpeed * (isBoosting ? boostMultiplier : 1f));
 
-        // Rotation progressive avec Q et D
         float rotation = input.x * rotationSpeed * Time.deltaTime;
         transform.Rotate(0, 0, -rotation);
 
-        // Appliquer le mouvement de la voiture
         transform.Translate(Vector3.up * currentSpeed * Time.deltaTime, Space.Self);
     }
 
