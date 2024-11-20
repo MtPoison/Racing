@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -8,33 +10,75 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject endGameCanvas;
     [SerializeField] private GameObject UiCanvas;
     [SerializeField] private GameObject player;
-    [SerializeField] private End end;
     [SerializeField] private Round round;
     [SerializeField] private TimerCount timer;
     [SerializeField] private TMP_Text bestTime;
+    [SerializeField] private TMP_Text tempsRestant;
+    [SerializeField] private TMP_Text Etat;
+    private End end;
 
     private void Start() 
     {
+        var manager = FindObjectOfType<End>();
+        end = manager;
         endGameCanvas.SetActive(false);
         player.SetActive(true);
     }
     private void Update()
     {
-        if(round.GetTour() > 3 || timer.getCurentime() == 0)
+        if(FinishAllTour() || timer.getCurentime() == 0)
         {
-            BestTime();
+            var manager = FindObjectOfType<End>();
+            if (FinishAllTour())
+            {
+                timer.StopCountdown();
+                Etat.text = "Win";
+            }
+            else
+            {
+                Etat.text = "Loose";
+            }
+            tempsRestant.text = $"{ConvertMinute(timer.getCurentime())}";
+            
+            GetMinValueAndIndex(end.GetTours());
             endGameCanvas.SetActive(true);
             player.SetActive(false);
             
         }
     }
 
-    private void BestTime()
-    { 
-        end.BestTime();
+    public bool FinishAllTour()
+    {
+        if(round.GetTour() > 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-        string text = ConvertMinute(end.GetBestTime());
-        bestTime.text = $"Meilleure tour {end.GetBestTour() + 1:D2} : {text}";
+   
+    public void GetMinValueAndIndex(List<float> floats)
+    {
+        if (floats.Count == 0)
+        {
+            throw new ArgumentException("La liste est vide !");
+        }
+
+        float minValue = floats[0];
+        int minIndex = 0;
+
+        for (int i = 1; i < floats.Count; i++)
+        {
+            if (floats[i] < minValue)
+            {
+                minValue = floats[i];
+                minIndex = i;
+            }
+        }
+        bestTime.text = $"Meilleure tour {minIndex + 1:D2} : {ConvertMinute(minValue)}";
     }
 
     private string ConvertMinute( float time)

@@ -7,24 +7,36 @@ public class TimerCount : MonoBehaviour
 {
     [SerializeField] private TMP_Text countdownText;
     [SerializeField] private float startTime;
-
     private float currentTime;
+    private bool isRunning;
 
     void Start()
     {
+        isRunning = true;
         currentTime = startTime;
         UpdateCountdownText();
     }
 
     void Update()
     {
-        if (currentTime > 0)
+        if (isRunning)
         {
             currentTime -= Time.deltaTime;
-            currentTime = Mathf.Max(0, currentTime);
             UpdateCountdownText();
+
+            if (currentTime <= 0)
+            {
+                currentTime = 0;
+                isRunning = false;
+            }
         }
     }
+
+    public void StopCountdown()
+    {
+        isRunning = false;
+    }
+
 
     void UpdateCountdownText()
     {

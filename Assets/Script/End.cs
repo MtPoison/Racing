@@ -3,22 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
-using System.Collections.Generic;
-using System.Linq;
 public class End : MonoBehaviour
 {
     [SerializeField] Round round;
     private CheckpointManager manager;
     [SerializeField] private GameObject endGameCanvas;
 
+    private bool win = false;
     private List<float> timeTour;
     private float time;
-    private float bestTime;
-    private int bestTour;
     private void Start()
     {
         timeTour = new List<float>();
-        timeTour.Clear();
         manager = FindObjectOfType<CheckpointManager>();
         endGameCanvas.SetActive(false);
         if (manager == null)
@@ -30,16 +26,19 @@ public class End : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            
+            foreach (float item in timeTour)
+            {
+                Debug.Log(item);
+            }
             if (manager.AreAllCheckpointsTrue())
             {
+                timeTour.Add(time);
+                time = 0;
                 round.AddTour();
                 manager.ResetAllCheckpoints();
-                timeTour.Add(time);
-                
                 round.UpdateTour();
                 
-                time = 0;
+                
             }
         }
     }
@@ -49,15 +48,6 @@ public class End : MonoBehaviour
         time += Time.deltaTime;
     }
 
-    public void BestTime()
-    {
-        print("coucou");
-        bestTime = timeTour.Min();
-        bestTour = timeTour.IndexOf(bestTime);
-    }
-
-    public int GetBestTour() { return bestTour; }
-
-    public float GetBestTime() { return bestTime; }
+    public List<float> GetTours() { return timeTour; }
 
 }

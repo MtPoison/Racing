@@ -6,7 +6,7 @@ using UnityEngine;
 public class Round : MonoBehaviour
 {
     [SerializeField] private TMP_Text round;
-    [SerializeField] private float totalTour;
+    [SerializeField] private int totalTour;
     private int tour;
 
     void Start()
@@ -22,6 +22,8 @@ public class Round : MonoBehaviour
     }
 
     public int GetTour() {  return tour; }
+
+    public int GetTotalTour() { return totalTour;  }
 
     public void UpdateTour()
     {
