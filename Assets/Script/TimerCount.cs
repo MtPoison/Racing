@@ -33,4 +33,6 @@ public class TimerCount : MonoBehaviour
 
         countdownText.text = $"{minutes:D2}:{seconds:D2}";
     }
+
+    public float getCurentime() { return currentTime; }
 }

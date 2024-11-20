@@ -19,12 +19,11 @@ public class Round : MonoBehaviour
     public void AddTour()
     {
         tour++;
-        UpdateTour();
     }
 
     public int GetTour() {  return tour; }
 
-    void UpdateTour()
+    public void UpdateTour()
     {
         if (round != null)
         {
