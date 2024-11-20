@@ -7,7 +7,6 @@ public class End : MonoBehaviour
 {
     [SerializeField] Round round;
     private CheckpointManager manager;
-    [SerializeField] private GameObject endGameCanvas;
 
     private bool win = false;
     private List<float> timeTour;
@@ -16,7 +15,6 @@ public class End : MonoBehaviour
     {
         timeTour = new List<float>();
         manager = FindObjectOfType<CheckpointManager>();
-        endGameCanvas.SetActive(false);
         if (manager == null)
         {
             Debug.LogError("CheckpointManager introuvable dans la scène.");

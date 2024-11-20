@@ -6,35 +6,53 @@ using UnityEngine.UI;
 
 public class Bouton : MonoBehaviour
 {
-    public Button[] buttons; 
-
+    public Button[] buttons;
+    private ChoiceImage choiceImage;
+    int i;
     void Start()
     {
+        choiceImage = FindObjectOfType<ChoiceImage>();
         foreach (var button in buttons)
         {
             button.onClick.AddListener(() => OnButtonClick(button));
         }
     }
 
-    void OnButtonClick(Button clickedButton)
+    public void OnButtonClick(Button clickedButton)
     {
         string buttonTag = clickedButton.tag;
 
         switch (buttonTag)
         {
             case "Restart":
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(i);
                 break;
 
-            case "Settings":
-                Debug.Log("Ouvrir les paramètres !");
-                // Exemple d'action : Afficher un menu d'options
+            case "Montre":
+                print("ok");
+                SceneManager.LoadScene(1);
+                PlayerPrefs.SetInt("WorldChoice", 1);
+                
+                PlayerPrefs.Save();
+                
                 break;
 
-            case "Quit":
-                Debug.Log("Quitter le jeu !");
-                // Exemple d'action : Quitter l'application
-                Application.Quit();
+            case "Tour":
+                PlayerPrefs.SetInt("WorldChoice", 2);
+                PlayerPrefs.Save();
+                break;
+            case "Left":
+                choiceImage.ShowPreviousImage();
+                print("left");
+                break;
+            case "Right":
+                choiceImage.ShowNextImage();
+                print("R");
+                break;
+            case "Select":
+                i = choiceImage.GetCurrentIndex() + 2;
+                SceneManager.LoadScene(i);
+                print("S");
                 break;
 
             default:

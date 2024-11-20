@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Restart
+  - Montre
+  - Tour
+  - Select
+  - Left
+  - Right
   layers:
   - Default
   - TransparentFX
