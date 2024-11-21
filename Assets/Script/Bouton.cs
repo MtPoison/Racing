@@ -42,6 +42,7 @@ public class Bouton : MonoBehaviour
                 break;
 
             case "Tour":
+                SceneManager.LoadScene(1);
                 PlayerPrefs.SetInt("WorldChoice", 2);
                 PlayerPrefs.Save();
                 break;

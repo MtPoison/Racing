@@ -11,6 +11,7 @@ public class End : MonoBehaviour
     private bool win = false;
     private List<float> timeTour;
     private float time;
+    private int worldChoice;
     private void Start()
     {
         timeTour = new List<float>();
@@ -19,6 +20,7 @@ public class End : MonoBehaviour
         {
             Debug.LogError("CheckpointManager introuvable dans la scène.");
         }
+        worldChoice = PlayerPrefs.GetInt("WorldChoice", 0);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -34,7 +36,15 @@ public class End : MonoBehaviour
                 time = 0;
                 round.AddTour();
                 manager.ResetAllCheckpoints();
-                round.UpdateTour($"{round.GetTour()} / {round.GetTotalTour()}");
+                if(worldChoice == 1)
+                {
+                    round.UpdateTour($"{round.GetTour()} / {round.GetTotalTour()}");
+                }
+                else
+                {
+                    round.UpdateTour($"{round.GetTour()}");
+                }
+                
             }
         }
     }

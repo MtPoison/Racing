@@ -6,14 +6,21 @@ using UnityEngine;
 public class TimerCount : MonoBehaviour
 {
     [SerializeField] private TMP_Text countdownText;
-    [SerializeField] private float startTime;
     private float currentTime;
     private bool isRunning;
-
+    private int worldChoice;
     void Start()
     {
+        worldChoice = PlayerPrefs.GetInt("WorldChoice", 0);
         isRunning = true;
-        currentTime = startTime;
+        if(worldChoice == 1)
+        {
+            currentTime = 70f;
+        }
+        else {
+            currentTime = 150f;
+        }
+        
         UpdateCountdownText();
     }
 

@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject endGameCanvas;
     [SerializeField] private GameObject UiCanvas;
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject start;
     [SerializeField] private Round round;
     [SerializeField] private TimerCount timer;
     [SerializeField] private TMP_Text bestTime;
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
         end = FindObjectOfType<End>();
         endGameCanvas.SetActive(false);
         player.SetActive(false);
+        start.SetActive(false);
         timer.StopCountdown();
         endPanelHasAppeared = false;
         worldChoice = PlayerPrefs.GetInt("WorldChoice", 0);
@@ -57,9 +59,13 @@ public class GameManager : MonoBehaviour
                 Debug.Log("fin");
             }
         }
-        else
+        else if(timer.getCurentime() == 0)
         {
             Etat.text = "Time Over";
+            tempsRestant.text = $"{ConvertMinute(timer.getCurentime())}";
+            endGameCanvas.SetActive(true);
+            player.SetActive(false);
+            endPanelHasAppeared = true;
         }
     }
 

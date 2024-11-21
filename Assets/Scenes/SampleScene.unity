@@ -222,6 +222,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3352696716940757284, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 4936892128522765703, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
       propertyPath: m_Name
       value: EndGame
@@ -834,7 +838,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4941819666425672339, guid: 4933da8ce88839b4cb10acab04bafa0e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5050449748439844885, guid: 4933da8ce88839b4cb10acab04bafa0e, type: 3}
       propertyPath: m_Pivot.x
@@ -20656,6 +20660,10 @@ PrefabInstance:
       propertyPath: round
       value: 
       objectReference: {fileID: 542330353}
+    - target: {fileID: 7561925865202203314, guid: e331280d6e3866f44a2ead3f235f84e0, type: 3}
+      propertyPath: start
+      value: 
+      objectReference: {fileID: 764702050}
     - target: {fileID: 7561925865202203314, guid: e331280d6e3866f44a2ead3f235f84e0, type: 3}
       propertyPath: timer
       value: 

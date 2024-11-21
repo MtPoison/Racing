@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 546147877965847411}
   - component: {fileID: 7258949629288935662}
   m_Layer: 5
-  m_Name: Select 1
+  m_Name: Skin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

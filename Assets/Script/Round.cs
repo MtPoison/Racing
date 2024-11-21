@@ -8,12 +8,22 @@ public class Round : MonoBehaviour
     [SerializeField] private TMP_Text round;
     [SerializeField] private int totalTour;
     private int tour;
+    private int worldChoice;
 
     void Start()
     {
-        tour = 1;  
-        round.text = $"{tour}/{totalTour}";
-        
+        worldChoice = PlayerPrefs.GetInt("WorldChoice", 0);
+        tour = 0;
+        if (worldChoice == 1)
+        {
+            UpdateTour($"{GetTour()} / {GetTotalTour()}");
+        }
+        else
+        {
+            UpdateTour($"{GetTour()}");
+        }
+
+
     }
 
     public void AddTour()
