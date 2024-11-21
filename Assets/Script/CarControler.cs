@@ -47,6 +47,7 @@ public class CarControler : MonoBehaviour
 
     private void OnEnable()
     {
+        Debug.Log(StackTraceUtility.ExtractStackTrace());
         deplacements = playerControler.Player.Deplacement;
         boost = playerControler.Player.Boost;
 
@@ -59,6 +60,7 @@ public class CarControler : MonoBehaviour
 
     private void OnDisable()
     {
+        Debug.Log(StackTraceUtility.ExtractStackTrace());
         deplacements.Disable();
         boost.Disable();
 

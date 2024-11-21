@@ -276,7 +276,15 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1057655325367259336, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057655325367259336, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057655325367259336, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1057655325367259336, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
@@ -301,7 +309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1057655325367259336, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 200
+      value: -350
       objectReference: {fileID: 0}
     - target: {fileID: 1057655325367259336, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -443,6 +451,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.75
       objectReference: {fileID: 0}
+    - target: {fileID: 3352696716940757284, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 4738124174742434309, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
       propertyPath: m_Name
       value: PlusDeTour
@@ -488,12 +500,16 @@ PrefabInstance:
       value: UnityEngine.UI.Button, UnityEngine.UI
       objectReference: {fileID: 0}
     - target: {fileID: 5707626204392367062, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5707626204392367062, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5707626204392367062, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5707626204392367062, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
       propertyPath: m_AnchorMin.y
@@ -517,7 +533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5707626204392367062, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -200
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 5707626204392367062, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -533,7 +549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7138119939272678486, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
       propertyPath: m_text
-      value: against the clock
+      value: Against The Clock
       objectReference: {fileID: 0}
     - target: {fileID: 8167466251508249403, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
       propertyPath: m_Type
@@ -545,7 +561,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: b2175f4fd913fce4bbe83838793a6118, type: 3}
     - target: {fileID: 8384460188890427456, guid: e34fceebd1356c5469b6ef5562f2133a, type: 3}
       propertyPath: m_text
-      value: "More \nround"
+      value: "More \nRound"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

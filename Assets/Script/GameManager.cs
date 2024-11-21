@@ -16,34 +16,50 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text tempsRestant;
     [SerializeField] private TMP_Text Etat;
     private End end;
+    int worldChoice;
+    bool endPanelHasAppeared = false;
 
     private void Start() 
     {
-        var manager = FindObjectOfType<End>();
-        end = manager;
+        end = FindObjectOfType<End>();
         endGameCanvas.SetActive(false);
-        player.SetActive(true);
+        player.SetActive(false);
+        timer.StopCountdown();
+        endPanelHasAppeared = false;
+        worldChoice = PlayerPrefs.GetInt("WorldChoice", 0);
     }
+
+
     private void Update()
     {
-        if(FinishAllTour() || timer.getCurentime() == 0)
+        if (worldChoice == 1)
         {
-            var manager = FindObjectOfType<End>();
-            if (FinishAllTour())
+            if (FinishAllTour() || timer.getCurentime() == 0)
             {
-                timer.StopCountdown();
-                Etat.text = "Win";
+                if (endPanelHasAppeared)
+                    return;
+
+                if (timer.getCurentime() > 0)
+                {
+                    timer.StopCountdown();
+                    Etat.text = "Win";
+                }
+                else
+                {
+                    Etat.text = "Loose";
+                }
+                tempsRestant.text = $"{ConvertMinute(timer.getCurentime())}";
+
+                GetMinValueAndIndex(end.GetTours());
+                endGameCanvas.SetActive(true);
+                player.SetActive(false);
+                endPanelHasAppeared = true;
+                Debug.Log("fin");
             }
-            else
-            {
-                Etat.text = "Loose";
-            }
-            tempsRestant.text = $"{ConvertMinute(timer.getCurentime())}";
-            
-            GetMinValueAndIndex(end.GetTours());
-            endGameCanvas.SetActive(true);
-            player.SetActive(false);
-            
+        }
+        else
+        {
+            Etat.text = "Time Over";
         }
     }
 

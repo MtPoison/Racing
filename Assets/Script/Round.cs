@@ -25,11 +25,11 @@ public class Round : MonoBehaviour
 
     public int GetTotalTour() { return totalTour;  }
 
-    public void UpdateTour()
+    public void UpdateTour(string text)
     {
         if (round != null)
         {
-            round.text = $"{tour}/{totalTour}";
+            round.text = $"{text}";
         }
         else
         {

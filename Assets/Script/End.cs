@@ -34,9 +34,7 @@ public class End : MonoBehaviour
                 time = 0;
                 round.AddTour();
                 manager.ResetAllCheckpoints();
-                round.UpdateTour();
-                
-                
+                round.UpdateTour($"{round.GetTour()} / {round.GetTotalTour()}");
             }
         }
     }

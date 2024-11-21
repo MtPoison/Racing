@@ -6,21 +6,24 @@ using UnityEngine.UI;
 public class ChoiceImage : MonoBehaviour
 {
     private int currentIndex = 0;
-    public Image displayImage;         
-    public Sprite[] images;
+    [SerializeField] Image displayImage;         
+    [SerializeField] private List<Sprite> images;
+    [SerializeField] private GameObject player;
+
     public void ShowNextImage()
     {
-        currentIndex = (currentIndex + 1) % images.Length;
+        currentIndex = (currentIndex + 1) % images.Count;
         UpdateImage();
     }
 
     public void ShowPreviousImage()
     {
-        currentIndex = (currentIndex - 1 + images.Length) % images.Length;
+        currentIndex = (currentIndex - 1 + images.Count) % images.Count;
         UpdateImage();
     }
-
     public int GetCurrentIndex() {  return currentIndex; } 
+
+    public void SetSkinCar() {  player.GetComponent<SpriteRenderer>().sprite = images[currentIndex]; }
     
     void UpdateImage()
     {

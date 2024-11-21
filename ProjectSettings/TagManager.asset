@@ -10,6 +10,7 @@ TagManager:
   - Select
   - Left
   - Right
+  - Play
   layers:
   - Default
   - TransparentFX

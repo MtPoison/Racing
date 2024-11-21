@@ -37,6 +37,11 @@ public class TimerCount : MonoBehaviour
         isRunning = false;
     }
 
+    public void ActiveCountdown()
+    { 
+        isRunning = true; 
+    }
+
 
     void UpdateCountdownText()
     {
