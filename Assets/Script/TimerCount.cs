@@ -42,6 +42,7 @@ public class TimerCount : MonoBehaviour
     public void StopCountdown()
     {
         isRunning = false;
+        print("coucouc");
     }
 
     public void ActiveCountdown()

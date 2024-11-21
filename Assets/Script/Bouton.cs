@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,9 @@ public class Bouton : MonoBehaviour
     
     int i;
     [SerializeField] private GameObject canvaSkin;
-    [SerializeField] private GameObject start;
+    [SerializeField] private Starting start;
+    [SerializeField] private GameObject starting;
+    [SerializeField] private GameManager gameManager;
     void Start()
     {
         
@@ -52,7 +55,6 @@ public class Bouton : MonoBehaviour
                 break;
             case "Right":
                 choiceImage.ShowNextImage();
-                print("R");
                 break;
             case "Select":
                 i = choiceImage.GetCurrentIndex() + 2;
@@ -65,7 +67,14 @@ public class Bouton : MonoBehaviour
             case "Play":
                 choiceImage.SetSkinCar();
                 canvaSkin.SetActive(false);
-                start.SetActive(true);
+                gameManager.IsStarting();
+                start.IsCountdown();
+                break;
+            case "Main":
+                SceneManager.LoadScene(0);
+                break;
+            case "Leave":
+                Application.Quit();
                 break;
 
             default:

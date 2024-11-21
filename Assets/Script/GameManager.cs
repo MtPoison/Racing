@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,14 +12,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject UiCanvas;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject start;
+    [SerializeField] private GameObject mainMenu;
+
     [SerializeField] private Round round;
     [SerializeField] private TimerCount timer;
+    [SerializeField] private CarControler car;
+
     [SerializeField] private TMP_Text bestTime;
     [SerializeField] private TMP_Text tempsRestant;
+    [SerializeField] private TMP_Text bestRound;
     [SerializeField] private TMP_Text Etat;
+
+    private PlayerControler playerControls;
+    private InputAction menuToggleAction;
     private End end;
-    int worldChoice;
-    bool endPanelHasAppeared = false;
+
+    private int worldChoice;
+    private bool endPanelHasAppeared = false;
+    private bool starting = false;
+    private bool isMenuActive = false;
 
     private void Start() 
     {
@@ -31,12 +43,45 @@ public class GameManager : MonoBehaviour
         worldChoice = PlayerPrefs.GetInt("WorldChoice", 0);
     }
 
+    private void OnEnable()
+    {
+        playerControls = new PlayerControler();
+        menuToggleAction = playerControls.Player.Menu;
 
+        menuToggleAction.performed += ToggleMenuAction;
+
+        menuToggleAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        menuToggleAction.Disable();
+        menuToggleAction.performed -= ToggleMenuAction;
+    }
     private void Update()
     {
+        if(isMenuActive)
+        {
+            timer.StopCountdown();
+            car.PoseGame();
+        }
+        else {
+            timer.ActiveCountdown();
+            car.IsPoseGame();
+        }
+        if(starting)
+        {
+            start.SetActive(true);
+            
+        }
+        else
+        {
+            start.SetActive(false);
+            
+        }
         if (worldChoice == 1)
         {
-            if (FinishAllTour() || timer.getCurentime() == 0)
+            if (round.GetTour() > round.GetTotalTour() || timer.getCurentime() == 0)
             {
                 if (endPanelHasAppeared)
                     return;
@@ -62,25 +107,33 @@ public class GameManager : MonoBehaviour
         else if(timer.getCurentime() == 0)
         {
             Etat.text = "Time Over";
-            tempsRestant.text = $"{ConvertMinute(timer.getCurentime())}";
+            tempsRestant.text = $"{round.GetTour()}";
+            GetMinValueAndIndex(end.GetTours());
             endGameCanvas.SetActive(true);
             player.SetActive(false);
             endPanelHasAppeared = true;
+            bestRound.text = "Best Round";
+            
         }
     }
 
-    public bool FinishAllTour()
+    private void ToggleMenuAction(InputAction.CallbackContext context)
     {
-        if(round.GetTour() > 1)
+        isMenuActive = !isMenuActive;
+
+        if (isMenuActive)
         {
-            return true;
+            mainMenu.SetActive(true);
         }
         else
         {
-            return false;
+            mainMenu.SetActive(false);
         }
     }
 
+    public void IsStarting() { starting = true; }
+
+    public void EndStarting() { starting = false; }
    
     public void GetMinValueAndIndex(List<float> floats)
     {
@@ -100,7 +153,7 @@ public class GameManager : MonoBehaviour
                 minIndex = i;
             }
         }
-        bestTime.text = $"Meilleure tour {minIndex + 1:D2} : {ConvertMinute(minValue)}";
+        bestTime.text = $"Meilleure tour {minIndex + 1:D2}  {ConvertMinute(minValue)}";
     }
 
     private string ConvertMinute( float time)

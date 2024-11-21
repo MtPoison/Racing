@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CheckpointManager : MonoBehaviour
 {
     [SerializeField] List<Checkpoint> checkpoints;
+    [SerializeField] private TMP_Text Etat;
     private int lastCheckpointIndex = -1;
 
 
@@ -20,14 +22,15 @@ public class CheckpointManager : MonoBehaviour
         {
             checkpoint.Activate();
             lastCheckpointIndex = checkpointIndex;
+            Etat.text = $"";
         }
         else if (checkpointIndex <= lastCheckpointIndex)
         {
-            Debug.Log("Contre-sens détecté : vous êtes retourné dans un checkpoint déjà franchi !");
+            Etat.text = "Contre-sens détecté : vous êtes retourné dans un checkpoint déjà franchi !";
         }
         else
         {
-            Debug.Log($"Checkpoint {checkpointIndex} ignoré : vous avez sauté un checkpoint !");
+            Etat.text = $"Checkpoint {checkpointIndex} ignoré : vous avez sauté un checkpoint !";
         }
     }
 

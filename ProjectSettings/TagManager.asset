@@ -11,6 +11,8 @@ TagManager:
   - Left
   - Right
   - Play
+  - Main
+  - Leave
   layers:
   - Default
   - TransparentFX

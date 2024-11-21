@@ -9,38 +9,38 @@ public class Starting : MonoBehaviour
     [SerializeField] private TimerCount timer;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject start;
+    [SerializeField] private GameManager gameManager;
     private float currentTime = 3;
     private bool isRunning;
 
     void Start()
     {
-        isRunning = true;
+        isRunning = false;
         UpdateCountdownText();
     }
 
     void Update()
     {
-        if(isActiveAndEnabled) { 
-            if (isRunning)
-            {
-                currentTime -= Time.deltaTime;
-                UpdateCountdownText();
+        if (isRunning)
+        {
+            currentTime -= Time.deltaTime;
+            UpdateCountdownText();
 
-                if (currentTime <= 0)
-                {
-                    currentTime = 0;
-                    isRunning = false;
-                    timer.ActiveCountdown();
-                    player.SetActive(true);
-                    start.SetActive(false);
-                }
+            if (currentTime <= 0)
+            {
+                currentTime = 0;
+                isRunning = false;
+                timer.ActiveCountdown();
+                player.SetActive(true);
+                start.SetActive(false);
+                gameManager.EndStarting();
             }
         }
     }
 
-    public void StopCountdown()
+    public void IsCountdown()
     {
-        isRunning = false;
+        isRunning = true;
     }
 
 

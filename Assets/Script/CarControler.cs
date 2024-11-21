@@ -24,6 +24,7 @@ public class CarControler : MonoBehaviour
     private bool isBoosting = false;
     private float boostEndTime = 0f;
     private float nextBoostAvailableTime = 0f;
+    private bool gamePose = false;
 
     private SoundManager soundManager;
     private AudioSource audioSource;
@@ -47,7 +48,6 @@ public class CarControler : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log(StackTraceUtility.ExtractStackTrace());
         deplacements = playerControler.Player.Deplacement;
         boost = playerControler.Player.Boost;
 
@@ -60,7 +60,6 @@ public class CarControler : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log(StackTraceUtility.ExtractStackTrace());
         deplacements.Disable();
         boost.Disable();
 
@@ -70,45 +69,51 @@ public class CarControler : MonoBehaviour
 
     private void Update()
     {
-        Vector2 input = deplacements.ReadValue<Vector2>();
-
-        if (isBoosting && Time.time >= boostEndTime)
+        if(gamePose)
         {
-            isBoosting = false;
-            currentSpeed = Mathf.Min(currentSpeed, maxSpeed); // Réinitialisation à maxSpeed
-            soundManager.StopSound();
+            Vector2 input = deplacements.ReadValue<Vector2>();
+
+            if (isBoosting && Time.time >= boostEndTime)
+            {
+                isBoosting = false;
+                currentSpeed = Mathf.Min(currentSpeed, maxSpeed); // Réinitialisation à maxSpeed
+                soundManager.StopSound();
+            }
+
+            float speedMultiplier = isBoosting ? boostMultiplier : 1f;
+
+            if (input.y > 0)
+            {
+                currentSpeed += acceleration * Time.deltaTime * speedMultiplier;
+                if (!isBoosting) soundManager.PlaySoundIfNotPlaying(accelerationSound);
+            }
+            else if (input.y < 0)
+            {
+                currentSpeed -= acceleration * Time.deltaTime;
+                if (!isBoosting) soundManager.PlaySoundIfNotPlaying(brakeSound);
+            }
+            else
+            {
+                currentSpeed = Mathf.Lerp(currentSpeed, 0, Time.deltaTime * brakePower);
+                if (!isBoosting) soundManager.StopSound();
+            }
+
+            currentSpeed = Mathf.Clamp(currentSpeed, maxReverseSpeed, maxSpeed * speedMultiplier);
+
+            if (!isBoosting)
+            {
+                AdjustVolume();
+            }
+
+            float rotation = input.x * rotationSpeed * Time.deltaTime;
+            transform.Rotate(0, 0, -rotation);
+
+            transform.Translate(Vector3.up * currentSpeed * Time.deltaTime, Space.Self);
         }
-
-        float speedMultiplier = isBoosting ? boostMultiplier : 1f;
-
-        if (input.y > 0)
-        {
-            currentSpeed += acceleration * Time.deltaTime * speedMultiplier;
-            if (!isBoosting) soundManager.PlaySoundIfNotPlaying(accelerationSound);
-        }
-        else if (input.y < 0)
-        {
-            currentSpeed -= acceleration * Time.deltaTime;
-            if (!isBoosting) soundManager.PlaySoundIfNotPlaying(brakeSound);
-        }
-        else
-        {
-            currentSpeed = Mathf.Lerp(currentSpeed, 0, Time.deltaTime * brakePower);
-            if (!isBoosting) soundManager.StopSound();
-        }
-
-        currentSpeed = Mathf.Clamp(currentSpeed, maxReverseSpeed, maxSpeed * speedMultiplier);
-
-        if (!isBoosting)
-        {
-            AdjustVolume();
-        }
-
-        float rotation = input.x * rotationSpeed * Time.deltaTime;
-        transform.Rotate(0, 0, -rotation);
-
-        transform.Translate(Vector3.up * currentSpeed * Time.deltaTime, Space.Self);
     }
+
+    public void PoseGame() { gamePose = false; }
+    public void IsPoseGame() { gamePose = true; }
 
     private void OnBoost(InputAction.CallbackContext context)
     {
