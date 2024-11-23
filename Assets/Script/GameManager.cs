@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Round round;
     [SerializeField] private TimerCount timer;
     [SerializeField] private CarControler car;
+    [SerializeField] private Save save;
+    [SerializeField] private Starting startt;
 
     [SerializeField] private TMP_Text bestTime;
     [SerializeField] private TMP_Text tempsRestant;
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour
     private bool endPanelHasAppeared = false;
     private bool starting = false;
     private bool isMenuActive = false;
+    private bool stopTimerMenu = false;
 
     private void Start() 
     {
@@ -66,18 +69,29 @@ public class GameManager : MonoBehaviour
             car.PoseGame();
         }
         else {
-            timer.ActiveCountdown();
+            if(stopTimerMenu)
+            {
+                timer.ActiveCountdown();
+            }
             car.IsPoseGame();
         }
         if(starting)
         {
             start.SetActive(true);
-            
+            timer.StopCountdown();
+
+
         }
         else
         {
             start.SetActive(false);
-            
+            if(!startt.GetTest())
+            {
+                timer.ActiveCountdown();
+                startt.GetTest(true);
+            }
+                
+
         }
         if (worldChoice == 1)
         {
@@ -107,13 +121,13 @@ public class GameManager : MonoBehaviour
         else if(timer.getCurentime() == 0)
         {
             Etat.text = "Time Over";
-            tempsRestant.text = $"{round.GetTour()}";
+            save.SaveScore(round.GetTour());
+            tempsRestant.text = $"{save.LoadScore()}";
             GetMinValueAndIndex(end.GetTours());
             endGameCanvas.SetActive(true);
             player.SetActive(false);
             endPanelHasAppeared = true;
             bestRound.text = "Best Round";
-            
         }
     }
 
@@ -121,6 +135,8 @@ public class GameManager : MonoBehaviour
     {
         isMenuActive = !isMenuActive;
 
+        stopTimerMenu = true;
+        print(stopTimerMenu);
         if (isMenuActive)
         {
             mainMenu.SetActive(true);

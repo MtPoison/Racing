@@ -6,10 +6,12 @@ public class Checkpoint : MonoBehaviour
 {
     [SerializeField] int checkpointIndex;
     private bool pass;
-
+    private SpriteRenderer spriteRenderer;
     private void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         pass = false;
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -20,6 +22,8 @@ public class Checkpoint : MonoBehaviour
             if (manager != null)
             {
                 manager.ActivateCheckpoint(checkpointIndex, this);
+                spriteRenderer.color = Color.green;
+
             }
         }
     }

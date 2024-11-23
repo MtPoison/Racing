@@ -8,6 +8,9 @@ public class CheckpointManager : MonoBehaviour
     [SerializeField] List<Checkpoint> checkpoints;
     [SerializeField] private TMP_Text Etat;
     private int lastCheckpointIndex = -1;
+    private Color startColor = Color.blue;
+    private Color targetColor = Color.green;
+
 
 
     public void ActivateCheckpoint(int checkpointIndex, Checkpoint checkpoint)
@@ -36,10 +39,11 @@ public class CheckpointManager : MonoBehaviour
 
     public bool AreAllCheckpointsTrue()
     {
-        foreach (var checkpoint in checkpoints)
+        for(int i = 0; i < checkpoints.Count; i++)
         {
-            if (!checkpoint.IsPass()) return false;
+            if (!checkpoints[i].IsPass()) return false; 
         }
+
         return true;
     }
 
@@ -48,6 +52,8 @@ public class CheckpointManager : MonoBehaviour
         foreach (var checkpoint in checkpoints)
         {
             checkpoint.FalsePass();
+
+            checkpoint.GetComponent<SpriteRenderer>().color = startColor;
         }
         lastCheckpointIndex = -1;
         Debug.Log("Tous les checkpoints ont été réinitialisés.");

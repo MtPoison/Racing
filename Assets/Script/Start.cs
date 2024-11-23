@@ -12,10 +12,13 @@ public class Starting : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     private float currentTime = 3;
     private bool isRunning;
+    private bool test;
 
     void Start()
     {
         isRunning = false;
+        test = true;
+        
         UpdateCountdownText();
     }
 
@@ -25,15 +28,16 @@ public class Starting : MonoBehaviour
         {
             currentTime -= Time.deltaTime;
             UpdateCountdownText();
+            timer.StopCountdown();
 
-            if (currentTime <= 0)
+            if (currentTime < 0)
             {
                 currentTime = 0;
-                isRunning = false;
-                timer.ActiveCountdown();
                 player.SetActive(true);
                 start.SetActive(false);
                 gameManager.EndStarting();
+                isRunning = false;
+                test = false;
             }
         }
     }
@@ -43,6 +47,9 @@ public class Starting : MonoBehaviour
         isRunning = true;
     }
 
+    public bool GetTest() {  return test; }
+    public void GetTest(bool _test) {  test = _test; }
+    public bool GetIsRunning() {  return isRunning; }
 
     void UpdateCountdownText()
     {

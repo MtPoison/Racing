@@ -12,7 +12,7 @@ public class TimerCount : MonoBehaviour
     void Start()
     {
         worldChoice = PlayerPrefs.GetInt("WorldChoice", 0);
-        isRunning = true;
+        isRunning = false;
         if(worldChoice == 1)
         {
             currentTime = 70f;
@@ -22,6 +22,7 @@ public class TimerCount : MonoBehaviour
         }
         
         UpdateCountdownText();
+        print(isRunning);
     }
 
     void Update()
@@ -42,7 +43,6 @@ public class TimerCount : MonoBehaviour
     public void StopCountdown()
     {
         isRunning = false;
-        print("coucouc");
     }
 
     public void ActiveCountdown()
