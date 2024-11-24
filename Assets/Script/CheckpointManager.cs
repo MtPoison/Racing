@@ -8,8 +8,7 @@ public class CheckpointManager : MonoBehaviour
     [SerializeField] List<Checkpoint> checkpoints;
     [SerializeField] private TMP_Text Etat;
     private int lastCheckpointIndex = -1;
-    private Color startColor = Color.blue;
-    private Color targetColor = Color.green;
+    [SerializeField] private Color startColor;
 
 
 

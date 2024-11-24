@@ -5,75 +5,67 @@ using UnityEngine;
 
 public class Save : MonoBehaviour
 {
-    private string filePath;
-    private int i;
-
-    // Classe pour sauvegarder les scores
     [System.Serializable]
-    private class ScoreData
+    public class CardData
     {
-        public Dictionary<int, int> scores = new Dictionary<int, int>();
+        public int cardID; 
+        public int score;      
     }
 
-    private ScoreData data;
-
-    private void Start()
+    public class CardCollection
     {
-        filePath = Path.Combine(Application.persistentDataPath, "scoreData.json");
+        public List<CardData> cards = new List<CardData>();
+    }
+    private string savePath;
+    private CardCollection cardCollection;
 
-        if (IsFileCreated())
+    void Start()
+    {
+        savePath = Application.persistentDataPath + "/cards.json";
+        LoadData();
+    }
+
+    public void SaveData()
+    {
+        string json = JsonUtility.ToJson(cardCollection, true);
+        File.WriteAllText(savePath, json);
+        Debug.Log("Card data saved to " + savePath);
+    }
+
+    public void LoadData()
+    {
+        if (File.Exists(savePath))
         {
-            LoadScore();
+            string json = File.ReadAllText(savePath);
+            cardCollection = JsonUtility.FromJson<CardCollection>(json);
+            Debug.Log("Card data loaded.");
         }
         else
         {
-            data = new ScoreData();
-            Debug.Log("Aucun fichier trouvé. Un nouveau fichier sera créé.");
+            cardCollection = new CardCollection();
+            Debug.LogWarning("No save file found. Initializing new collection.");
         }
     }
 
-    public void SaveScore(int newScore)
+    public void UpdateCardScore(int cardID, int newScore)
     {
-        i = PlayerPrefs.GetInt("MapChoice", 0);
+        CardData card = cardCollection.cards.Find(c => c.cardID == cardID);
 
-
-        data.scores[i]= newScore;
-
-        string jsonData = JsonUtility.ToJson(data, true);
-        File.WriteAllText(filePath, jsonData);
-
-        Debug.Log($"Score sauvegardé pour Map {i} : {newScore}");
-    }
-
-    public int LoadScore()
-    {
-        if (IsFileCreated())
+        if (card != null)
         {
-            string jsonData = File.ReadAllText(filePath);
-            data = JsonUtility.FromJson<ScoreData>(jsonData);
-
-            i = PlayerPrefs.GetInt("MapChoice", 0);
-
-            if (data.scores.ContainsKey(i))
-            {
-                Debug.Log($"Scores chargés pour Map {i} : {string.Join(", ", data.scores[i])}");
-                return data.scores[i];
-            }
-            else
-            {
-                Debug.LogWarning($"Aucun score trouvé pour Map {i}.");
-                return 0;
-            }
+            card.score = newScore;
         }
         else
         {
-            Debug.LogWarning("Tentative de chargement d'un fichier inexistant.");
-            return 0;
+            cardCollection.cards.Add(new CardData { cardID = cardID, score = newScore });
         }
+
+        SaveData(); 
     }
 
-    private bool IsFileCreated()
+    public int GetCardScore(int cardID)
     {
-        return File.Exists(filePath);
+        CardData card = cardCollection.cards.Find(c => c.cardID == cardID);
+        return card != null ? card.score : 0; 
     }
 }

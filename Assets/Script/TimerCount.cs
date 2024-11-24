@@ -18,7 +18,7 @@ public class TimerCount : MonoBehaviour
             currentTime = 70f;
         }
         else {
-            currentTime = 150f;
+            currentTime = 30f;
         }
         
         UpdateCountdownText();

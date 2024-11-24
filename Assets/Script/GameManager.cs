@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     private bool starting = false;
     private bool isMenuActive = false;
     private bool stopTimerMenu = false;
+    private bool saveScore = true;
+    private int i;
 
     private void Start() 
     {
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
         timer.StopCountdown();
         endPanelHasAppeared = false;
         worldChoice = PlayerPrefs.GetInt("WorldChoice", 0);
+        i = PlayerPrefs.GetInt("MapChoice", 0);
     }
 
     private void OnEnable()
@@ -121,8 +124,11 @@ public class GameManager : MonoBehaviour
         else if(timer.getCurentime() == 0)
         {
             Etat.text = "Time Over";
-            save.SaveScore(round.GetTour());
-            tempsRestant.text = $"{save.LoadScore()}";
+            if (save.GetCardScore(i) < round.GetTour())
+            {
+                save.UpdateCardScore(i,round.GetTour());
+            }
+            tempsRestant.text = $"{save.GetCardScore(i)}";
             GetMinValueAndIndex(end.GetTours());
             endGameCanvas.SetActive(true);
             player.SetActive(false);
