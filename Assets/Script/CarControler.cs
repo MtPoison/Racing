@@ -20,6 +20,8 @@ public class CarControler : MonoBehaviour
     [SerializeField] private AudioClip brakeSound;
     [SerializeField] private AudioClip boostSound;
 
+    [SerializeField] private GameObject boostImg;
+
     private float currentSpeed = 0f;
     private bool isBoosting = false;
     private float boostEndTime = 0f;
@@ -76,8 +78,18 @@ public class CarControler : MonoBehaviour
             if (isBoosting && Time.time >= boostEndTime)
             {
                 isBoosting = false;
-                currentSpeed = Mathf.Min(currentSpeed, maxSpeed); // Réinitialisation à maxSpeed
+                currentSpeed = Mathf.Min(currentSpeed, maxSpeed); 
                 soundManager.StopSound();
+                boostImg.SetActive(false);
+            }
+
+            if (!isBoosting && Time.time >= nextBoostAvailableTime)
+            {
+                boostImg.SetActive(true);
+            }
+            else if (Time.time < nextBoostAvailableTime)
+            {
+                boostImg.SetActive(false);
             }
 
             float speedMultiplier = isBoosting ? boostMultiplier : 1f;
@@ -128,6 +140,7 @@ public class CarControler : MonoBehaviour
                 audioSource.volume = 1;
             }
             soundManager.PlaySound(boostSound);
+            
         }
     }
 
@@ -138,6 +151,7 @@ public class CarControler : MonoBehaviour
             isBoosting = false;
             currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
             soundManager.StopSound();
+            
         }
     }
 

@@ -7,6 +7,8 @@ public class TimerCount : MonoBehaviour
 {
     [SerializeField] private TMP_Text countdownText;
     private float currentTime;
+    [SerializeField] private float time1; 
+    [SerializeField] private float time2; 
     private bool isRunning;
     private int worldChoice;
     void Start()
@@ -15,10 +17,10 @@ public class TimerCount : MonoBehaviour
         isRunning = false;
         if(worldChoice == 1)
         {
-            currentTime = 70f;
+            currentTime = time1;
         }
         else {
-            currentTime = 30f;
+            currentTime = time2;
         }
         
         UpdateCountdownText();

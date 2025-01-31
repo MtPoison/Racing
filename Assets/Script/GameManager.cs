@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject start;
     [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject UI;
 
     [SerializeField] private Round round;
     [SerializeField] private TimerCount timer;
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
         endGameCanvas.SetActive(false);
         player.SetActive(false);
         start.SetActive(false);
+        UI.SetActive(false);
         timer.StopCountdown();
         endPanelHasAppeared = false;
         worldChoice = PlayerPrefs.GetInt("WorldChoice", 0);
@@ -80,6 +82,7 @@ public class GameManager : MonoBehaviour
         }
         if(starting)
         {
+            UI.SetActive(true);
             start.SetActive(true);
             timer.StopCountdown();
 
@@ -98,7 +101,7 @@ public class GameManager : MonoBehaviour
         }
         if (worldChoice == 1)
         {
-            if (round.GetTour() > round.GetTotalTour() || timer.getCurentime() == 0)
+            if (round.GetTour() >= round.GetTotalTour() || timer.getCurentime() == 0)
             {
                 if (endPanelHasAppeared)
                     return;
